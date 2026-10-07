@@ -3,7 +3,7 @@ package main
 import (
 	"time"
 
-	"github.com/Jonak-Adipta-Kalita/JAK-RSS-Aggregator-Project/generated/database"
+	"github.com/Jonak-Adipta-Kalita/JAK-RSS-Aggregator-Project/src/database/generated"
 	"github.com/google/uuid"
 )
 

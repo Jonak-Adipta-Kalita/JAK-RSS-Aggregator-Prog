@@ -1,8 +1,8 @@
 version: 2
 sql:
-  - schema: "sql/schema"
-    queries: "sql/queries"
+  - schema: "src/database/sql/schema"
+    queries: "src/database/sql/queries"
     engine: "postgresql"
     gen:
       go:
-        out: "generated/database"
+        out: "src/database/generated"

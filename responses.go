@@ -7,11 +7,11 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/Jonak-Adipta-Kalita/JAK-RSS-Aggregator-Project/generated/database"
+	"github.com/Jonak-Adipta-Kalita/JAK-RSS-Aggregator-Project/src/database/generated"
 	"github.com/google/uuid"
 )
 
-func respondWithJson(w http.ResponseWriter, code int, payload interface{}) {
+func respondWithJson(w http.ResponseWriter, code int, payload any) {
 	dat, err := json.Marshal(payload)
 	if err != nil {
 		log.Fatalf("Failed to marshal JSON response: %v", payload)
@@ -64,4 +64,8 @@ func (apiCfg *ApiConfig) handleCreateUser(w http.ResponseWriter, r *http.Request
 	}
 
 	respondWithJson(w, 200, databaseUserToUser(user))
+}
+
+func (apiCfg *ApiConfig) handleGetUserByAPIKey(w http.ResponseWriter, r *http.Request) {
+
 }

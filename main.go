@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/Jonak-Adipta-Kalita/JAK-RSS-Aggregator-Project/generated/database"
+	"github.com/Jonak-Adipta-Kalita/JAK-RSS-Aggregator-Project/src/database/generated"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/cors"
 	"github.com/joho/godotenv"
