@@ -7,7 +7,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/Jonak-Adipta-Kalita/JAK-RSS-Aggregator-Project/src/database/generated"
+	"github.com/Jonak-Adipta-Kalita/JAK-RSS-Aggregator-Project/src/auth"
+	database "github.com/Jonak-Adipta-Kalita/JAK-RSS-Aggregator-Project/src/database/generated"
 	"github.com/google/uuid"
 )
 
@@ -63,9 +64,22 @@ func (apiCfg *ApiConfig) handleCreateUser(w http.ResponseWriter, r *http.Request
 		return
 	}
 
-	respondWithJson(w, 200, databaseUserToUser(user))
+	respondWithJson(w, 201, databaseUserToUser(user))
 }
 
 func (apiCfg *ApiConfig) handleGetUserByAPIKey(w http.ResponseWriter, r *http.Request) {
+	apiKey, err := auth.GetApiKey(r.Header)
 
+	if err != nil {
+		respondWithError(w, 403, fmt.Sprintf("Auth error: %v", err))
+		return
+	}
+
+	user, err := apiCfg.DB.GetUserByAPIKey(r.Context(), apiKey)
+	if err != nil {
+		respondWithError(w, 400, fmt.Sprintf("Couldn't get user: %v", err))
+		return
+	}
+
+	respondWithJson(w, 200, databaseUserToUser(user))
 }

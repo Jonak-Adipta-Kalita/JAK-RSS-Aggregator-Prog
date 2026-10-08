@@ -2,7 +2,7 @@
 // versions:
 //   sqlc v1.31.1
 
-package database
+package generated
 
 import (
 	"time"
@@ -15,4 +15,5 @@ type User struct {
 	CreatedAt time.Time
 	UpdatedAt time.Time
 	Name      string
+	ApiKey    string
 }

@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/Jonak-Adipta-Kalita/JAK-RSS-Aggregator-Project/src/database/generated"
+	database "github.com/Jonak-Adipta-Kalita/JAK-RSS-Aggregator-Project/src/database/generated"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/cors"
 	"github.com/joho/godotenv"
@@ -55,6 +55,7 @@ func main() {
 		respondWithJson(w, 200, struct{}{})
 	})
 	v1Router.Post("/user", apiCfg.handleCreateUser)
+	v1Router.Get("/user", apiCfg.handleGetUserByAPIKey)
 
 	router.Mount("/v1", v1Router)
 

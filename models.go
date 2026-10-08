@@ -3,7 +3,7 @@ package main
 import (
 	"time"
 
-	"github.com/Jonak-Adipta-Kalita/JAK-RSS-Aggregator-Project/src/database/generated"
+	database "github.com/Jonak-Adipta-Kalita/JAK-RSS-Aggregator-Project/src/database/generated"
 	"github.com/google/uuid"
 )
 
@@ -12,6 +12,7 @@ type User struct {
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
 	Name      string    `json:"name"`
+	APIKey    string    `json:"api_key"`
 }
 
 func databaseUserToUser(dbUser database.User) User {
