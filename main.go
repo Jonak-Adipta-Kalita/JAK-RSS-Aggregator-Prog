@@ -54,8 +54,12 @@ func main() {
 	v1Router.Get("/healthz", func(w http.ResponseWriter, r *http.Request) {
 		respondWithJson(w, 200, struct{}{})
 	})
+
 	v1Router.Post("/user", apiCfg.handleCreateUser)
-	v1Router.Get("/user", apiCfg.handleGetUserByAPIKey)
+	v1Router.Get("/user", apiCfg.middlewareAuth(apiCfg.handleGetUserByAPIKey))
+
+	v1Router.Post("/feed", apiCfg.middlewareAuth(apiCfg.handleCreateFeed))
+	v1Router.Get("/feeds", apiCfg.handleGetFeeds)
 
 	router.Mount("/v1", v1Router)
 
