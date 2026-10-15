@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"time"
 
 	database "github.com/Jonak-Adipta-Kalita/JAK-RSS-Aggregator-Project/src/database/generated"
 	"github.com/go-chi/chi"
@@ -36,9 +37,11 @@ func main() {
 		return
 	}
 
+	db := database.New(conn)
 	apiCfg := ApiConfig{
-		DB: database.New(conn),
+		DB: db,
 	}
+	go startScrapping(db, 10, time.Minute)
 
 	router := chi.NewRouter()
 
@@ -61,9 +64,9 @@ func main() {
 	v1Router.Post("/feed", apiCfg.middlewareAuth(apiCfg.handleCreateFeed))
 	v1Router.Get("/feeds", apiCfg.handleGetFeeds)
 
-	v1Router.Post("/feed_follows", apiCfg.middlewareAuth(apiCfg.handleCreateFeedFollow))
+	v1Router.Post("/feed_follow", apiCfg.middlewareAuth(apiCfg.handleCreateFeedFollow))
 	v1Router.Get("/feed_follows", apiCfg.middlewareAuth(apiCfg.handleGetFeedFollows))
-	v1Router.Delete("/feed_follows/{feedFollowID}", apiCfg.middlewareAuth(apiCfg.handleDeleteFeedFollow))
+	v1Router.Delete("/feed_follow/{feedFollowID}", apiCfg.middlewareAuth(apiCfg.handleDeleteFeedFollow))
 
 	router.Mount("/v1", v1Router)
 
