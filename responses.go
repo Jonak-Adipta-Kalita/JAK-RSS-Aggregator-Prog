@@ -174,3 +174,17 @@ func (apiCfg *ApiConfig) handleDeleteFeedFollow(w http.ResponseWriter, r *http.R
 
 	respondWithJson(w, 200, struct{}{})
 }
+
+func (apiCfg *ApiConfig) handleGetPostsForUser(w http.ResponseWriter, r *http.Request, user database.User) {
+	posts, err := apiCfg.DB.GetPostsForUser(r.Context(), database.GetPostsForUserParams{
+		UserID: user.ID,
+		Limit:  10,
+	})
+
+	if err != nil {
+		respondWithError(w, 400, fmt.Sprintf("Couldn't get post: %v", err))
+		return
+	}
+
+	respondWithJson(w, 200, databasePostsToPosts(posts))
+}
